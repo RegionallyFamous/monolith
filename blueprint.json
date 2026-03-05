@@ -36,8 +36,8 @@
 		{
 			"step": "installPlugin",
 			"pluginZipFile": {
-				"resource": "self",
-				"slug": "monolith"
+				"resource": "url",
+				"url": "https://github.com/RegionallyFamous/monolith/releases/latest/download/monolith.zip"
 			},
 			"options": {
 				"activate": true
