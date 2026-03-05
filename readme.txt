@@ -2,9 +2,9 @@
 Contributors: RegionallyFamous
 Tags: woocommerce, single page store, quick view, interactivity api, block theme
 Requires at least: 6.8
-Tested up to: 6.8
+Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 10.4
@@ -88,6 +88,13 @@ The quick-view modal links to the product's full page for variable product selec
 5. The Editor Style panel showing Default / Minimal / Fullscreen options.
 
 == Changelog ==
+
+= 1.0.1 =
+* Updated "Tested up to" to WordPress 6.9.
+* Fixed PHPCS prefix warnings by renaming render.php variables to `$monolith_nonce` and `$monolith_api_url`.
+* Added ABSPATH direct-access guard to `patterns/single-page-store.php`.
+* Excluded `wp-cli.phar` from the release zip — it was downloaded at build time for i18n generation but was inadvertently bundled.
+* Removed `languages/.gitkeep` (hidden file not permitted in plugin submissions).
 
 = 1.0.0 =
 * Initial release.

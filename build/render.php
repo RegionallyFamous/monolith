@@ -20,14 +20,14 @@ if ( ! function_exists( 'wc_get_checkout_url' ) ) {
 	return;
 }
 
-$nonce   = wp_create_nonce( 'wc_store_api' );
-$api_url = rest_url( 'wc/store/v1' );
+$monolith_nonce   = wp_create_nonce( 'wc_store_api' );
+$monolith_api_url = rest_url( 'wc/store/v1' );
 
 wp_interactivity_config(
 	'monolith',
 	array(
-		'apiUrl' => $api_url,
-		'nonce'  => $nonce,
+		'apiUrl' => $monolith_api_url,
+		'nonce'  => $monolith_nonce,
 	)
 );
 

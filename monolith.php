@@ -3,7 +3,7 @@
  * Plugin Name:       Monolith
  * Plugin URI:        https://github.com/RegionallyFamous/monolith
  * Description:       Transforms a WooCommerce block-theme site into a single-page store. Products, quick-view modal, and cart all on the homepage — no page reloads.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.8
  * Requires PHP:      8.0
  * Author:            Nick
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'MONOLITH_VERSION', '1.0.0' );
+define( 'MONOLITH_VERSION', '1.0.1' );
 define( 'MONOLITH_PATH', plugin_dir_path( __FILE__ ) );
 define( 'MONOLITH_URL', plugin_dir_url( __FILE__ ) );
 
