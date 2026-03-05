@@ -1,4 +1,5 @@
 {
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
 	"landingPage": "/",
 	"preferredVersions": {
 		"php": "8.3",
@@ -15,32 +16,23 @@
 		},
 		{
 			"step": "installPlugin",
-			"pluginZipFile": {
-				"resource": "url",
-				"url": "https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"
-			},
-			"options": {
-				"activate": true
+			"pluginData": {
+				"resource": "wordpress.org/plugins",
+				"slug": "woocommerce"
 			}
 		},
 		{
 			"step": "installTheme",
-			"themeZipFile": {
-				"resource": "url",
-				"url": "https://downloads.wordpress.org/theme/twentytwentyfive.latest-stable.zip"
-			},
-			"options": {
-				"activate": true
+			"themeData": {
+				"resource": "wordpress.org/themes",
+				"slug": "twentytwentyfive"
 			}
 		},
 		{
 			"step": "installPlugin",
-			"pluginZipFile": {
+			"pluginData": {
 				"resource": "url",
 				"url": "https://github.com/RegionallyFamous/monolith/releases/latest/download/monolith.zip"
-			},
-			"options": {
-				"activate": true
 			}
 		},
 		{
