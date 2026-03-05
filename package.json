@@ -1,0 +1,16 @@
+{
+  "name": "monolith",
+  "version": "1.0.0",
+  "description": "Transforms a WooCommerce block-theme site into a single-page store.",
+  "scripts": {
+    "build": "wp-scripts build",
+    "start": "wp-scripts start",
+    "lint:js": "wp-scripts lint-js",
+    "lint:css": "wp-scripts lint-style",
+    "lint:php": "phpcs",
+    "i18n:make": "wp i18n make-pot . languages/monolith.pot --exclude=node_modules,vendor,build"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^30.0.0"
+  }
+}

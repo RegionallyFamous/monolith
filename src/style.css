@@ -1,0 +1,341 @@
+/**
+ * Monolith – Stylesheet
+ *
+ * Philosophy: structural and motion only.
+ * All visual values (color, typography, spacing) are inherited from the
+ * active theme via theme.json CSS custom properties or the cascade.
+ * We intentionally do NOT set: color, font-family, font-size, border,
+ * border-radius, box-shadow, or explicit padding.
+ */
+
+/* =============================================================================
+   Modal – structural layout
+   ============================================================================= */
+
+/**
+ * The .monolith-modal element is the focusable dialog container.
+ * Hidden by default; .is-open makes it visible.
+ */
+.monolith-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 99999;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden auto;
+	overscroll-behavior: contain;
+
+	/* Visual: from theme — never hardcoded. */
+	background: var( --wp--preset--color--base, Canvas );
+	color: var( --wp--preset--color--contrast, CanvasText );
+	padding: var( --wp--preset--spacing--50, 1.5rem );
+	font-family: inherit;
+	font-size: inherit;
+}
+
+.monolith-modal.is-open {
+	display: flex;
+}
+
+/* =============================================================================
+   Modal – entry animation
+   ============================================================================= */
+
+/**
+ * Transition on opacity and scale when the modal enters.
+ * @starting-style provides the "from" state when display changes from none.
+ * Falls back gracefully in browsers that don't support @starting-style.
+ */
+@supports ( @starting-style { } ) {
+	.monolith-modal.is-open {
+		transition: opacity 0.25s ease, transform 0.25s ease;
+		opacity: 1;
+		transform: scale( 1 );
+	}
+
+	@starting-style {
+		.monolith-modal.is-open {
+			opacity: 0;
+			transform: scale( 0.97 );
+		}
+	}
+}
+
+/* View Transitions shared-element animation. */
+.monolith-modal {
+	view-transition-name: monolith-active-product;
+}
+
+::view-transition-old( monolith-active-product ) {
+	animation: none;
+}
+
+::view-transition-new( monolith-active-product ) {
+	animation: monolith-zoom-in 0.3s ease both;
+}
+
+@keyframes monolith-zoom-in {
+	from {
+		opacity: 0;
+		transform: scale( 0.95 );
+	}
+	to {
+		opacity: 1;
+		transform: scale( 1 );
+	}
+}
+
+/* Respect user motion preferences. */
+@media ( prefers-reduced-motion: reduce ) {
+	.monolith-modal,
+	.monolith-modal.is-open,
+	::view-transition-old( monolith-active-product ),
+	::view-transition-new( monolith-active-product ) {
+		animation: none;
+		transition: none;
+	}
+}
+
+/* =============================================================================
+   Modal – inner layout
+   ============================================================================= */
+
+.monolith-modal__inner,
+.monolith-modal__content {
+	position: relative;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var( --wp--preset--spacing--40, 1.5rem );
+	width: min( 90vw, 900px );
+	max-height: 90vh;
+	overflow-y: auto;
+}
+
+/* =============================================================================
+   Modal – close button (structural only)
+   ============================================================================= */
+
+.monolith-modal__close {
+	position: absolute;
+	top: var( --wp--preset--spacing--20, 0.75rem );
+	right: var( --wp--preset--spacing--20, 0.75rem );
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;  /* 44px at 16px base — meets WCAG 2.5.8 / Apple HIG minimum */
+	height: 2.75rem;
+	cursor: pointer;
+	background: none;
+	border: none;
+	line-height: 1;
+	color: inherit;
+	font-size: 1.5rem;
+}
+
+.monolith-modal__close:focus-visible {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+/* =============================================================================
+   Modal – loading state
+   ============================================================================= */
+
+.monolith-modal__loading {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	min-height: 200px;
+}
+
+.monolith-modal__loading.is-visible {
+	display: flex;
+}
+
+.monolith-modal__content {
+	display: none;
+}
+
+.monolith-modal__content.is-visible {
+	display: grid;
+}
+
+/* =============================================================================
+   Modal – image area
+   ============================================================================= */
+
+.monolith-modal__image {
+	display: flex;
+	align-items: flex-start;
+}
+
+.monolith-modal__image img {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+/* =============================================================================
+   Modal – details area
+   ============================================================================= */
+
+.monolith-modal__details {
+	display: flex;
+	flex-direction: column;
+	gap: var( --wp--preset--spacing--30, 1rem );
+}
+
+.monolith-modal__title {
+	margin: 0;
+}
+
+/* Prevent wide product descriptions from overflowing on narrow screens. */
+.monolith-modal__description {
+	overflow-wrap: break-word;
+}
+
+.monolith-modal__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var( --wp--preset--spacing--20, 0.75rem );
+	margin-top: auto;
+}
+
+/* =============================================================================
+   Overlay
+   ============================================================================= */
+
+.monolith-modal__overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 99998;
+	display: none;
+	background: color-mix( in srgb, currentColor 40%, transparent );
+	cursor: pointer;
+}
+
+.monolith-modal__overlay.is-active {
+	display: block;
+}
+
+/* =============================================================================
+   Scroll lock — applied to <html> when modal is open to prevent background scroll.
+   ============================================================================= */
+
+html.monolith-modal-open {
+	overflow: hidden;
+}
+
+/* =============================================================================
+   Mobile: full-screen modal
+   ============================================================================= */
+
+@media ( max-width: 600px ) {
+	.monolith-modal {
+		align-items: flex-start;
+
+		/*
+		 * Use max() so the modal never invades the device safe-area (notch /
+		 * Dynamic Island / home indicator). Falls back to the spacing token when
+		 * safe-area-inset-* is unavailable (older browsers).
+		 */
+		padding-top: max( var( --wp--preset--spacing--30, 1rem ), env( safe-area-inset-top ) );
+		padding-bottom: max( var( --wp--preset--spacing--30, 1rem ), env( safe-area-inset-bottom ) );
+		padding-left: max( var( --wp--preset--spacing--30, 1rem ), env( safe-area-inset-left ) );
+		padding-right: max( var( --wp--preset--spacing--30, 1rem ), env( safe-area-inset-right ) );
+	}
+
+	.monolith-modal__inner,
+	.monolith-modal__content {
+		grid-template-columns: 1fr;
+		width: 100%;
+		max-height: none;
+		/* The modal container is the scroller on mobile; no nested overflow needed. */
+		overflow-y: visible;
+	}
+
+	/*
+	 * On mobile the modal is taller than the viewport and becomes scrollable.
+	 * position: absolute scrolls with the content — switching to fixed pins the
+	 * button to the viewport corner so it's always reachable.
+	 * Safe-area offsets keep the button clear of the notch in landscape.
+	 */
+	.monolith-modal__close {
+		position: fixed;
+		top: max( var( --wp--preset--spacing--20, 0.75rem ), env( safe-area-inset-top ) );
+		right: max( var( --wp--preset--spacing--20, 0.75rem ), env( safe-area-inset-right ) );
+	}
+}
+
+/* =============================================================================
+   MiniCart – reposition popup as a full-height right-side drawer
+   Structural only: we move it, we don't restyle it.
+   ============================================================================= */
+
+.wc-block-mini-cart__drawer {
+	position: fixed !important;
+	top: 0 !important;
+	right: 0 !important;
+	bottom: 0 !important;
+	left: auto !important;
+	width: min( 400px, 100vw ) !important;
+	height: 100vh !important;
+	max-height: none !important;
+	transform: translateX( 100% );
+	transition: transform 0.3s ease;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	/* Keep contents clear of notch / home indicator on iOS. */
+	padding-top: env( safe-area-inset-top, 0px );
+	padding-bottom: env( safe-area-inset-bottom, 0px );
+	padding-right: env( safe-area-inset-right, 0px );
+}
+
+.wc-block-mini-cart__drawer.is-open {
+	transform: translateX( 0 );
+}
+
+/* Reduce motion: skip drawer animation. */
+@media ( prefers-reduced-motion: reduce ) {
+	.wc-block-mini-cart__drawer {
+		transition: none;
+	}
+}
+
+/* =============================================================================
+   Editor placeholder styles (editor only, not loaded on front end)
+   ============================================================================= */
+
+.monolith-modal-editor-placeholder {
+	border: 1px dashed currentColor;
+	border-radius: 2px;
+	opacity: 0.6;
+}
+
+.monolith-modal-editor-placeholder__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 1.5rem;
+	text-align: center;
+}
+
+.monolith-modal-editor-placeholder__icon {
+	font-size: 2rem;
+}
+
+.monolith-modal-editor-placeholder__title {
+	font-weight: 600;
+	margin: 0;
+}
+
+.monolith-modal-editor-placeholder__description,
+.monolith-modal-editor-placeholder__hint {
+	margin: 0;
+	font-size: 0.85em;
+	opacity: 0.8;
+}

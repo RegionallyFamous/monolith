@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Local dev environment
+.wp-env/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Build artifacts not tracked (dist zips from CI)
+dist/
+staging/
+
+# Note: build/ IS intentionally committed so the WordPress Playground
+# demo works without requiring a local build step.

@@ -1,0 +1,72 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and release plugin zip
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Generate translation template
+        run: |
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          mkdir -p languages
+          php wp-cli.phar i18n make-pot . languages/monolith.pot \
+            --exclude=node_modules,vendor,build \
+            --allow-root 2>/dev/null || true
+
+      - name: Stage plugin files
+        run: |
+          mkdir -p staging/monolith
+          rsync -av \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='node_modules' \
+            --exclude='src' \
+            --exclude='docs' \
+            --exclude='staging' \
+            --exclude='.wp-env.json' \
+            --exclude='phpcs.xml' \
+            --exclude='package.json' \
+            --exclude='package-lock.json' \
+            --exclude='.gitignore' \
+            --exclude='blueprint.json' \
+            . staging/monolith/
+
+      - name: Create zip
+        run: |
+          mkdir -p dist
+          cd staging
+          zip -r ../dist/monolith.zip monolith/
+          echo "Zip contents:"
+          zipinfo ../dist/monolith.zip | head -60
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/monolith.zip
+          generate_release_notes: true
+          fail_on_unmatched_files: true

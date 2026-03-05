@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "monolith/quick-view-modal",
+	"version": "1.0.0",
+	"title": "Monolith Quick View Modal",
+	"category": "woocommerce",
+	"icon": "store",
+	"description": "Intercepts WooCommerce product clicks and displays a quick-view modal instead of navigating to the product page. Auto-inserts into every Product Collection block.",
+	"keywords": [ "monolith", "quick view", "modal", "woocommerce", "single page store" ],
+	"textdomain": "monolith",
+	"editorScript": "file:./index.js",
+	"viewScript": "file:./view.js",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"supports": {
+		"html": false,
+		"inserter": true,
+		"multiple": false,
+		"reusable": false
+	},
+	"blockHooks": {
+		"woocommerce/product-collection": "lastChild"
+	}
+}
