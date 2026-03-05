@@ -4,7 +4,7 @@
 
 Customers browse products, peek at details, and add to cart without ever leaving the page. No JavaScript framework. No custom theme required. Just activate and go.
 
-[![Try the live demo](https://img.shields.io/badge/Try%20the%20live%20demo-%E2%86%92-blue?logo=wordpress&style=for-the-badge)](https://playground.wordpress.net/#{"blueprint-url":"https://raw.githubusercontent.com/RegionallyFamous/monolith/main/blueprint.json"})
+[![Try the live demo](https://img.shields.io/badge/Try%20the%20live%20demo-%E2%86%92-blue?logo=wordpress&style=for-the-badge)](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/RegionallyFamous/monolith/main/blueprint.json)
 
 ---
 
@@ -51,7 +51,7 @@ When they close the modal, they're back exactly where they were. When they're re
 2. Go to **Plugins → Add New → Upload Plugin**, select the file, and install.
 3. Activate — that's it.
 
-> **Want to try first?** [Open the live Playground demo →](https://playground.wordpress.net/#{"blueprint-url":"https://raw.githubusercontent.com/RegionallyFamous/monolith/main/blueprint.json"})
+> **Want to try first?** [Open the live Playground demo →](https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/RegionallyFamous/monolith/main/blueprint.json)
 
 ---
 
