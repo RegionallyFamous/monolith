@@ -1,6 +1,6 @@
 {
   "name": "monolith",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Transforms a WooCommerce block-theme site into a single-page store.",
   "scripts": {
     "build": "wp-scripts build",

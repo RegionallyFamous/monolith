@@ -65,6 +65,15 @@ jobs:
           echo "Zip contents:"
           zipinfo ../dist/monolith.zip | head -60
 
+      - name: Publish zip to GitHub Pages (docs/)
+        run: |
+          cp dist/monolith.zip docs/monolith.zip
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/monolith.zip
+          git commit -m "chore: publish monolith.zip for Playground demo [${GITHUB_REF_NAME}]"
+          git push origin main
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:

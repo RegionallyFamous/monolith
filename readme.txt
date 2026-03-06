@@ -4,7 +4,7 @@ Tags: woocommerce, single page store, quick view, interactivity api, block theme
 Requires at least: 6.8
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPL v2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 WC requires at least: 10.4
@@ -88,6 +88,9 @@ The quick-view modal links to the product's full page for variable product selec
 5. The Editor Style panel showing Default / Minimal / Fullscreen options.
 
 == Changelog ==
+
+= 1.0.2 =
+* Fix WordPress Playground demo: serve plugin zip via GitHub Pages instead of GitHub releases URL to avoid redirect/CORS issues.
 
 = 1.0.1 =
 * Updated "Tested up to" to WordPress 6.9.
